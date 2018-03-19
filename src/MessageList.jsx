@@ -1,11 +1,19 @@
 import React, {Component} from 'react';
-import Message from './Message.jsx'
+import Message from './Message.jsx';
 
-class Main extends Component{
+class MessageList extends Component{
   render() {
+    // console.log('Rendering <Messages/>');
+    let iterator = 0;
+    const messages = this.props.messages.map((message) => {
+      iterator++;
+      return (<Message key={iterator} message={message.content} username={message.username}/>)
+    })
+
+
     return(
       <main className="messages">
-        <Message/>
+        {messages}
         <div className="message system">
           Anonymous1 changed their name to nomnom.
         </div>
@@ -15,4 +23,4 @@ class Main extends Component{
 
 }
 
-export default Main;
+export default MessageList;
