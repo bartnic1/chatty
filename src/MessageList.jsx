@@ -7,7 +7,7 @@ class MessageList extends Component{
     let iterator = 0;
     const messages = this.props.messages.map((message) => {
       iterator++;
-      return (<Message key={iterator} type={message.type} message={message.content} username={message.username}/>)
+      return (<Message key={iterator} type={message.type} message={message.content} username={message.username} colour={message.colour}/>)
     })
 
     return(

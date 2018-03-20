@@ -14,28 +14,24 @@ class App extends Component {
     this.state = {
       currentUser: {name: 'Bob'}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [], // messages coming from the server will be stored here
-      userCount: 0
+      userCount: 0,
+      colour: '#000000'
     };
-    this.userCount = 0;
-    //On compass, they moved this to "componentdidmount". May want to change this later?
-    this.socket = new WebSocket("ws://localhost:3001");
-    this.socket.onopen = (evt) => {
-      console.log("Connected to server");
-    }
+
   }
 
-
-  // New way: Sending messages to an external server (3001)
-
+  // Handles sending messages to the websockets server (3001)
   newMessage = (chatMessage) => {
     let username = this.state.currentUser.name;
+    let colour = this.state.colour;
     if(username === ''){
       username = 'Anonymous';
     }
-    let messageData = {type: "postMessage", username: username, content: chatMessage};
+    let messageData = {type: "postMessage", username: username, content: chatMessage, colour: colour};
     this.socket.send(JSON.stringify(messageData));
   }
 
+  //This function defines what happens when a user changes their name
   newUser = (newUser) => {
     //Set the state of who the current user is
     let currentState = this.state;
@@ -63,20 +59,31 @@ class App extends Component {
       // Calling setState will trigger a call to render() in App and all child components.
       this.setState({messages: messages});
     }, 3000);
+    //Set up websocket here, as in compass
+    this.socket = new WebSocket("ws://localhost:3001");
+    this.socket.onopen = (evt) => {
+      console.log("Connected to server");
+      //Once it is setup, send message to server requesting unique colour.
+      this.socket.send("colour");
+    }
 
+    //Handle messages received from server
     this.socket.onmessage = (event) => {
       let currentState = this.state;
       let incomingMessage = JSON.parse(event.data);
       //Divert messages that update the user count
       if(incomingMessage.type === "countMessage"){
         currentState.userCount = incomingMessage.clientCount;
-        this.setState(currentState);
       }
+      //Handle message defining new user's colour
+      else if(incomingMessage.type === "colour"){
+        currentState.colour = incomingMessage.colour;
+      }
+      //Otherwise, update the chat log
       else{
-        //Otherwise, update the chat log
         currentState.messages.push(incomingMessage);
-        this.setState(currentState);
       }
+      this.setState(currentState);
     }
   }
 
