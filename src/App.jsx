@@ -13,8 +13,10 @@ class App extends Component {
     super();
     this.state = {
       currentUser: {name: 'Bob'}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [] // messages coming from the server will be stored here
+      messages: [], // messages coming from the server will be stored here
+      userCount: 0
     };
+    this.userCount = 0;
     //On compass, they moved this to "componentdidmount". May want to change this later?
     this.socket = new WebSocket("ws://localhost:3001");
     this.socket.onopen = (evt) => {
@@ -63,13 +65,15 @@ class App extends Component {
       let currentState = this.state;
       let incomingMessage = JSON.parse(event.data);
       //Divert messages that update the user count
-      if(incomingMessage.clientCount){
-
+      if(incomingMessage.type === "countMessage"){
+        currentState.userCount = incomingMessage.clientCount;
+        this.setState(currentState);
       }
-
-      //Otherwise, update the chat log
-      currentState.messages.push(incomingMessage);
-      this.setState(currentState);
+      else{
+        //Otherwise, update the chat log
+        currentState.messages.push(incomingMessage);
+        this.setState(currentState);
+      }
     }
   }
 
@@ -77,7 +81,7 @@ class App extends Component {
     // console.log('Rendering <App/>');
     return (
       <div>
-        <Navbar/>
+        <Navbar userCount={this.state.userCount}/>
         <MessageList messages={this.state.messages}/>
         <Chatbar currentUser={this.state.currentUser} newMessage={this.newMessage} newUser={this.newUser}/>
       </div>
