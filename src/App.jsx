@@ -40,8 +40,11 @@ class App extends Component {
     //Set the state of who the current user is
     let currentState = this.state;
     let currentUser = currentState.currentUser.name;
+    //Handle edge case for where no user name is entered:
+    if(newUser === ''){
+      newUser = "anonymous"
+    }
     currentState.currentUser.name = newUser;
-
     //Send a new notification message indicating change of user name
     let newNotification = `${currentUser} changed their name to ${newUser}`;
     let newMessage = {type: "postNotification", content: newNotification};
