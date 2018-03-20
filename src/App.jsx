@@ -62,6 +62,12 @@ class App extends Component {
     this.socket.onmessage = (event) => {
       let currentState = this.state;
       let incomingMessage = JSON.parse(event.data);
+      //Divert messages that update the user count
+      if(incomingMessage.clientCount){
+
+      }
+
+      //Otherwise, update the chat log
       currentState.messages.push(incomingMessage);
       this.setState(currentState);
     }
