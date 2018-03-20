@@ -7,16 +7,12 @@ class MessageList extends Component{
     let iterator = 0;
     const messages = this.props.messages.map((message) => {
       iterator++;
-      return (<Message key={iterator} message={message.content} username={message.username}/>)
+      return (<Message key={iterator} type={message.type} message={message.content} username={message.username}/>)
     })
-
 
     return(
       <main className="messages">
         {messages}
-        <div className="message system">
-          Anonymous1 changed their name to nomnom.
-        </div>
       </main>
     )
   }
