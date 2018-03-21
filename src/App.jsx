@@ -24,6 +24,7 @@ class App extends Component {
 
   //This function defines what happens when a user changes their name
   newUser = (newUser) => {
+    //If the username hasn't changed, don't do anything
     if(newUser !== this.state.currentUser.name) {
       let currentState = this.state;
       let currentUser = currentState.currentUser.name;
