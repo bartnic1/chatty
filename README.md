@@ -2,8 +2,6 @@
 
 Chatty is a real-time, online chat service which uses a WebSocket server to broadcast incoming messages to all connected clients. The client-side chat window is built using ReactJS.
 
-Battleship is a mostly client-side web application that allows users to play a game of battleship against the computer. The project aims to reinforce an understanding on how to manage server requests through AJAX (without having to reload the page), as well as how to manipulate the DOM using jQuery.
-
 ## Final Product
 
 ### A Well-Populated Chat Session:
