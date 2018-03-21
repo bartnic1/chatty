@@ -36,7 +36,7 @@ class App extends Component {
     //Set the state of who the current user is
     let currentState = this.state;
     let currentUser = currentState.currentUser.name;
-    //Handle edge case for where no user name is entered:
+    //Handle edge case for when no user name is entered:
     if(newUser === ''){
       newUser = "anonymous"
     }
@@ -50,6 +50,7 @@ class App extends Component {
     this.setState(currentState);
   }
 
+  // Will only be called once (mentor)
   componentDidMount() {
     setTimeout(() => {
       // Add a new message to the list of messages in the data store
@@ -59,13 +60,9 @@ class App extends Component {
       // Calling setState will trigger a call to render() in App and all child components.
       this.setState({messages: messages});
     }, 3000);
-    //Set up websocket here, as in compass
+
+    //Set up websocket
     this.socket = new WebSocket("ws://localhost:3001");
-    this.socket.onopen = (evt) => {
-      console.log("Connected to server");
-      //Once it is setup, send message to server requesting unique colour.
-      this.socket.send("colour");
-    }
 
     //Handle messages received from server
     this.socket.onmessage = (event) => {
@@ -78,8 +75,9 @@ class App extends Component {
       //Handle message defining new user's colour
       else if(incomingMessage.type === "colour"){
         currentState.colour = incomingMessage.colour;
+        console.log(currentState.colour);
       }
-      //Otherwise, update the chat log
+      //Otherwise, update the chat log (messages and notifications)
       else{
         currentState.messages.push(incomingMessage);
       }
@@ -88,7 +86,6 @@ class App extends Component {
   }
 
   render() {
-    // console.log('Rendering <App/>');
     return (
       <div>
         <Navbar userCount={this.state.userCount}/>

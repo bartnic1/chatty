@@ -58,13 +58,24 @@ body {
   padding: 0 10px;
 }
 
+.message-username {
+  flex: 2;
+  font-weight: 700;
+}
+
 .message-content {
   flex: 8;
 }
 
-.message-username {
-  flex: 2;
-  font-weight: 700;
+.imageFlex {
+  display: flex;
+  justify-content: center;
+}
+
+.image {
+  // flex: 8;
+  max-width: 60vw;
+  max-height: auto;
 }
 
 .navbar {
