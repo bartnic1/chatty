@@ -59,7 +59,7 @@ Chatty is a real-time, online chat service which uses a WebSocket server to broa
 
 1. When multiple users are engaged in the same chat session, any message being sent is visible to all users. This simulates a true, real-time chat experience. Additionally, if a user changes his/her name, all users are notified of this change in the chat log.
 2. If a user enters no name into the 'user name' input box, then the web app will set their messages as originating from an "Anonymous" alias.
-3. Using specially-defined regular expressions, a user may enter the URL of an image-type file (.jpg, .png, .gif), and the chat window will automatically render it as an image for all users.
+3. Using specially-defined regular expressions, a user may enter the URL of an image-type file (.jpg, .png, .gif), and the chat window will automatically render it as an image for all users. Input accepts singular and multiple image URLs, so long as they use a space as a delimiter.
 4. When a new client joins or leaves the chat session, the user count - visible at the top right-hand corner of the screen - will increment or decrement accordingly.
 
 ## Possible Future Additions
