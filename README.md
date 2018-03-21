@@ -1,45 +1,71 @@
-React Boilerplate
-=====================
+#Chatty
 
-A minimal and light dev environment for ReactJS.
+Chatty is a real-time, online chat service which uses a WebSocket server to broadcast incoming messages to all connected clients. The client-side chat window is built using ReactJS.
 
-### Usage
+Battleship is a mostly client-side web application that allows users to play a game of battleship against the computer. The project aims to reinforce an understanding on how to manage server requests through AJAX (without having to reload the page), as well as how to manipulate the DOM using jQuery.
 
-Clone the boilerplate and create your own git repo.
+## Final Product
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
+### A Well-Populated Chat Session:
+!["Many users in chat"](https://github.com/bartnic1/Battleship/blob/master/Battleship.png)
 
-Install the dependencies and start the server.
+### Sending Images via Chat:
+!["Images in chat"](https://github.com/bartnic1/Battleship/blob/master/Victory.png)
 
-```
-npm install
-npm start
-open http://localhost:3000
-```
+## Client-side Dependencies
 
-### Static Files
+- Babel-core
+- Babel-loader (https://github.com/babel/babel-loader)
+- Babel-preset-es2015
+- Babel-preset-react
+- Babel-preset-stage-0
+- Css-loader
+- Node-sass
+- Sass-loader
+- Sockjs-client
+- Style-loader
+- Webpack
+- Webpack-dev-server (https://github.com/webpack/webpack-dev-server)
+- React
+- React-dom
+- Node 6.0.0 or above
 
-You can store static files like images, fonts, etc in the `build` folder.
+## Client-side Dev-dependencies
 
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
+- Eslint
+- Eslint-plugin-react
 
-### Linting
+## Server-side Dependencies
 
-This boilerplate project includes React ESLint configuration.
+- Express
+- UUID
+- Websocket
 
-```
-npm run lint
-```
+## Basic Setup
 
-### Dependencies
+1. From the terminal, clone a copy of this repository into a directory (i.e. git clone git@github.com:bartnic1/chatty.git chatty)
+2. Install all dependencies in the main directory (chatty) using the 'npm install' command.
+3. Change your directory to ./chatty_server, and run 'npm install'.
+4. Now run the command 'node server.js'. This will start the websocket server.
+5. In a new terminal window, navigate to your chatty directory, and run 'npm start'. Note that this may take a minute to load completely.
+6. In a new browser window, navigate to <http://localhost:3000/>. Once webpack has finished translating all the files into a browser-friendly format, the appropriate elements will be rendered onto the screen.
 
-* React
-* Webpack
-* [babel-loader](https://github.com/babel/babel-loader)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+## Getting Started
+
+1. When the chatty window opens, the user is automatically conected to the websocket server, which generates and assigns a randomized colour to the user that contrasts with the background (2,985,984 colours are possible in total, reducing the chance of collision)
+2. Users may change their username by entering a new one into input field in the lower-left hand corner of the screen, and pressing **ENTER**. Otherwise, their username defaults to 'Bob'.
+3. Users may enter a chat message into the input field located at the bottom-center of the screen. Once finished, users should press **ENTER** to submit the message. Note that the randomly selected colours will differentiate clients.
+4. It is possible to simulate multiple users joining the same chat session by opening multiple browser windows at the same address (<http://localhost:3000/>).
+
+## Features
+
+1. When multiple users are engaged in the same chat session, any message being sent is visible to all users. This simulates a true, real-time chat experience. Additionally, if a user changes his/her name, all users are notified of this change in the chat log.
+2. If a user enters no name into the 'user name' input box, then the web app will set their messages as originating from an "Anonymous" alias.
+3. Using specially-defined regular expressions, a user may enter the URL of an image-type file (.jpg, .png, .gif), and the chat window will automatically render it as an image for all users.
+4. When a new client joins or leaves the chat session, the user count - visible at the top right-hand corner of the screen - will increment or decrement accordingly.
+
+## Possible Future Additions
+
+- Display a message (in the form of a notification) for when a user leaves Chatty.
+- Host the web application on an external webserver in order to test real-world functionality.
+- Implement a private messaging system.
