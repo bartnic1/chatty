@@ -7,7 +7,7 @@ Chatty is a real-time, online chat service which uses a WebSocket server to broa
 ### A Well-Populated Chat Session:
 !["Many users in chat"](https://github.com/bartnic1/Battleship/blob/master/Battleship.png)
 
-### Sending Images via Chat:
+### Sending GIF URLs:
 !["Images in chat"](https://github.com/bartnic1/Battleship/blob/master/Victory.png)
 
 ## Client-side Dependencies
