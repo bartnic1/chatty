@@ -1,4 +1,4 @@
-#Chatty
+# Chatty
 
 Chatty is a real-time, online chat service which uses a WebSocket server to broadcast incoming messages to all connected clients. The client-side chat window is built using ReactJS.
 
