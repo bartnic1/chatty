@@ -51,7 +51,7 @@ Chatty is a real-time, online chat service which uses a WebSocket server to broa
 ## Getting Started
 
 1. When the chatty window opens, the user is automatically conected to the websocket server, which assigns a randomized, background-constrasting colour to the user (2,985,984 colours are possible in total, reducing the chance of a collision)
-2. Users may change their username by entering a new one into input field in the lower-left hand corner of the screen, and pressing **ENTER**. Otherwise, their username defaults to 'Bob'.
+2. Users may change their username by entering a new one into the input field at the bottom-left hand corner of the screen, and pressing **ENTER**. Otherwise, their username defaults to 'Bob'.
 3. Users may enter a chat message into the input field located at the bottom-center of the screen. Once finished, users should press **ENTER** to submit the message. Note that the randomly selected colours will differentiate clients.
 4. It is possible to simulate multiple users joining the same chat session by opening multiple browser windows at the same address (<http://localhost:3000/>).
 
