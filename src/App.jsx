@@ -24,19 +24,21 @@ class App extends Component {
 
   //This function defines what happens when a user changes their name
   newUser = (newUser) => {
-    let currentState = this.state;
-    let currentUser = currentState.currentUser.name;
-    //If no user name is entered, switch name to anonymous:
-    if(newUser === ''){
-      newUser = "Anonymous"
-    }
-    currentState.currentUser.name = newUser;
-    //Send a new notification message indicating change of user name
-    let newNotification = `${currentUser} changed their name to ${newUser}`;
-    let newMessage = {type: "postNotification", content: newNotification};
-    this.socket.send(JSON.stringify(newMessage));
+    if(newUser !== this.state.currentUser.name) {
+      let currentState = this.state;
+      let currentUser = currentState.currentUser.name;
+      //If no user name is entered, switch name to anonymous:
+      if(newUser === ''){
+        newUser = "Anonymous"
+      }
+      currentState.currentUser.name = newUser;
+      //Send a new notification message indicating change of user name
+      let newNotification = `${currentUser} changed their name to ${newUser}`;
+      let newMessage = {type: "postNotification", content: newNotification};
+      this.socket.send(JSON.stringify(newMessage));
 
-    this.setState(currentState);
+      this.setState(currentState);
+    }
   }
 
   componentDidMount() {

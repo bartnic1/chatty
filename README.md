@@ -50,18 +50,19 @@ Chatty is a real-time, online chat service which uses a WebSocket server to broa
 
 ## Getting Started
 
-1. When the chatty window opens, the user is automatically conected to the websocket server, which assigns a randomized, background-constrasting colour to the user (2,985,984 colours are possible in total, reducing the chance of a collision)
+1. When the chatty window opens, the user is automatically conected to the websocket server. A single, automatically generated trial message is presented to the user shortly thereafter.
 2. Users may change their username by entering a new one into the input field at the bottom-left hand corner of the screen, and pressing **ENTER**. Otherwise, their username defaults to 'Bob'.
-3. Users may enter a chat message into the input field located at the bottom-center of the screen. Once finished, users should press **ENTER** to submit the message. Note that the randomly selected colours will differentiate clients.
+3. Users may enter a chat message into the input field located at the bottom-center of the screen. Once finished, users should press **ENTER** to submit the message.
 4. It is possible to simulate multiple users joining the same chat session by opening multiple browser windows at the same address (<http://localhost:3000/>).
 
 ## Features
 
 1. When multiple users are engaged in the same chat session, any message sent is visible to all users. This simulates a true, real-time chat experience.
-2. If a user changes his/her name, all users are notified of this change in the chat log.
-3. If a user enters no name into the user name input box, then the web app will set their messages as originating from an "Anonymous" alias.
-4. Using specially-defined regular expressions, a user may enter the URL of an image-type file (.jpg, .png, .gif), and the chat window will automatically render it as an image for all users. The chat can render multiple images, so long as the URLs being passed use at least one space as a delimiter.
-5. When a new client joins or leaves the chat session, the user count - visible at the top right-hand corner of the screen - will increment or decrement accordingly.
+2. The websocket server assigns a randomized, background-constrasting colour to each user (2,985,984 colours are possible in total, reducing the chance of a collision). This helps differentiate users when they post messages.
+3. If a user changes his/her name, all users are notified of this change in the chat log.
+4. If a user enters no name into the user name input box, then the web app will set their messages as originating from an "Anonymous" alias.
+5. Using specially-defined regular expressions, a user may enter the URL of an image-type file (.jpg, .png, .gif), and the chat window will automatically render it as an image for all users. The chat can render multiple images, so long as the URLs being passed use at least one space as a delimiter.
+6. When a new client joins or leaves the chat session, the user count - visible at the top right-hand corner of the screen - will increment or decrement accordingly.
 
 ## Possible Future Additions
 
