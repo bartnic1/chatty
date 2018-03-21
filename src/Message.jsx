@@ -13,10 +13,14 @@ class Message extends Component{
       // with an image element that has the corresponding URL.
       let imgElem = '';
       let regex = /\S+\.jpg|\S+\.png|\S+\.gif/g
-      let imgURL = regex.exec(message);
-      if(imgURL !== null){
+      let imgURLs = message.match(regex);
+      if(imgURLs !== null){
         message = message.replace(regex, '');
-        imgElem = <img src={imgURL[0]} alt='Image' className='image'></img>
+        let iterator = 0;
+        imgElem = imgURLs.map(imgURL => {
+          iterator++;
+          return <img key={iterator} src={imgURL} alt='Image' className='image'></img>
+        })
       }
       return (
         <div>

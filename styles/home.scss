@@ -70,10 +70,11 @@ body {
 .imageFlex {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .image {
-  // flex: 8;
+  padding: 10px;
   max-width: 60vw;
   max-height: auto;
 }
