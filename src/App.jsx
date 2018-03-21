@@ -3,42 +3,32 @@ import Chatbar from './Chatbar.jsx';
 import Navbar from './Navbar.jsx';
 import MessageList from './MessageList.jsx';
 
-//TO DO LIST:
-
-//Need to create system where, if the current user input is empty, it sets the currentuser to undefined
-
 class App extends Component {
 
   constructor() {
     super();
     this.state = {
-      currentUser: {name: 'Bob'}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [], // messages coming from the server will be stored here
+      currentUser: {name: 'Bob'},
+      messages: [], // Messages coming from the server will be stored here
       userCount: 0,
       colour: '#000000'
     };
-
   }
 
-  // Handles sending messages to the websockets server (3001)
+  // Handles sending messages being sent from the browser to the websockets server (3001)
   newMessage = (chatMessage) => {
     let username = this.state.currentUser.name;
-    let colour = this.state.colour;
-    if(username === ''){
-      username = 'Anonymous';
-    }
-    let messageData = {type: "postMessage", username: username, content: chatMessage, colour: colour};
+    let messageData = {type: "postMessage", username: username, content: chatMessage, colour: this.state.colour};
     this.socket.send(JSON.stringify(messageData));
   }
 
   //This function defines what happens when a user changes their name
   newUser = (newUser) => {
-    //Set the state of who the current user is
     let currentState = this.state;
     let currentUser = currentState.currentUser.name;
-    //Handle edge case for when no user name is entered:
+    //If no user name is entered, switch name to anonymous:
     if(newUser === ''){
-      newUser = "anonymous"
+      newUser = "Anonymous"
     }
     currentState.currentUser.name = newUser;
     //Send a new notification message indicating change of user name
@@ -46,18 +36,14 @@ class App extends Component {
     let newMessage = {type: "postNotification", content: newNotification};
     this.socket.send(JSON.stringify(newMessage));
 
-    //Finally set the state with the new user, re-render the page
     this.setState(currentState);
   }
 
-  // Will only be called once (mentor)
   componentDidMount() {
+    //This timeout was added as a part of the instructions for this project to test functionality
     setTimeout(() => {
-      // Add a new message to the list of messages in the data store
-      const newMessage = {id: 3, type: "incomingMessage", username: 'Michelle', content: 'Hello there!'};
+      const newMessage = {id: 1, type: "incomingMessage", username: 'Michelle', content: 'Hello there!'};
       const messages = this.state.messages.concat(newMessage);
-      // Update the state of the app component.
-      // Calling setState will trigger a call to render() in App and all child components.
       this.setState({messages: messages});
     }, 3000);
 
@@ -68,16 +54,16 @@ class App extends Component {
     this.socket.onmessage = (event) => {
       let currentState = this.state;
       let incomingMessage = JSON.parse(event.data);
-      //Divert messages that update the user count
+
+      //Handle messages that update the user count
       if(incomingMessage.type === "countMessage"){
         currentState.userCount = incomingMessage.clientCount;
       }
-      //Handle message defining new user's colour
+      //Then, handle messages defining a new user's colour
       else if(incomingMessage.type === "colour"){
         currentState.colour = incomingMessage.colour;
-        console.log(currentState.colour);
       }
-      //Otherwise, update the chat log (messages and notifications)
+      //Otherwise, update the chat log (for messages and notifications)
       else{
         currentState.messages.push(incomingMessage);
       }
@@ -85,6 +71,7 @@ class App extends Component {
     }
   }
 
+  //Renders all state data into various react components
   render() {
     return (
       <div>

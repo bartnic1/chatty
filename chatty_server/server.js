@@ -34,11 +34,11 @@ wss.on('connection', (ws) => {
   console.log('Client connected');
 
   //When a new user connects, give them a random colour for their username
-  ws.send(JSON.stringify({type: "colour", colour: newColour()}));
+  ws.send(JSON.stringify({type: 'colour', colour: newColour()}));
 
   //Update user count for all users when a new connection is established
   wss.clients.forEach(function each(client) {
-    let countMessage = JSON.stringify({type: "countMessage", clientCount: wss.clients.size});
+    let countMessage = JSON.stringify({type: 'countMessage', clientCount: wss.clients.size});
     client.send(countMessage);
   })
 
@@ -48,11 +48,11 @@ wss.on('connection', (ws) => {
     let message = JSON.parse(messageData);
     let returnMessage;
     switch(message.type){
-      case "postMessage":
-        returnMessage = JSON.stringify({id: newUUID, type: "incomingMessage", username: message.username, content: message.content, colour: message.colour});
+      case 'postMessage':
+        returnMessage = JSON.stringify({id: newUUID, type: 'incomingMessage', username: message.username, content: message.content, colour: message.colour});
         break;
-      case "postNotification":
-        returnMessage = JSON.stringify({id: newUUID, type: "incomingNotification", content: message.content});
+      case 'postNotification':
+        returnMessage = JSON.stringify({id: newUUID, type: 'incomingNotification', content: message.content});
         break;
       default:
         break;
@@ -69,7 +69,7 @@ wss.on('connection', (ws) => {
   ws.on('close', () => {
     console.log('Client disconnected')
     wss.clients.forEach(function each(client) {
-      let countMessage = JSON.stringify({type: "countMessage", clientCount: wss.clients.size});
+      let countMessage = JSON.stringify({type: 'countMessage', clientCount: wss.clients.size});
       client.send(countMessage);
     })
   });

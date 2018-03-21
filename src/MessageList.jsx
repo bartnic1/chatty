@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import Message from './Message.jsx';
 
+//The iterator ensures each react component has a unique key when it is rendered. Otherwise, data is passed
+//thruogh props to each message.
 class MessageList extends Component{
   render() {
-    // console.log('Rendering <Messages/>');
     let iterator = 0;
     const messages = this.props.messages.map((message) => {
       iterator++;

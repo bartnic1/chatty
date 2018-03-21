@@ -3,34 +3,36 @@ import React, {Component} from 'react';
 class Message extends Component{
   render() {
     let message = this.props.message;
-    if(this.props.type === "incomingMessage"){
+    //This section handles new messages, possibly including images
+    if(this.props.type === 'incomingMessage'){
+      // Set colour according to value sent by websocket server
       const nameStyle = {
         color: this.props.colour
       };
+      // Search for presence of images using regular expressions. If found, remove the expression and replace it
+      // with an image element that has the corresponding URL.
       let imgElem = '';
-      //Search for presence of images using regular expressions
       let regex = /\S+\.jpg|\S+\.png|\S+\.gif/g
       let imgURL = regex.exec(message);
       if(imgURL !== null){
         message = message.replace(regex, '');
-        imgElem = <img src={imgURL[0]} alt="Image" className="image"></img>
+        imgElem = <img src={imgURL[0]} alt='Image' className='image'></img>
       }
-      //Use: /\S+\.jpg|\S+\.png|\S+\.gif/g       <-- Note the g defines a global search
-
       return (
         <div>
-          <div className="message">
-            <span className="message-username" style={nameStyle}>{this.props.username}</span>
-            <span className="message-content">{message}</span>
+          <div className='message'>
+            <span className='message-username' style={nameStyle}>{this.props.username}</span>
+            <span className='message-content'>{message}</span>
           </div>
-          <div className="imageFlex">
+          <div className='imageFlex'>
             {imgElem}
           </div>
         </div>
       )
-    }else if(this.props.type === "incomingNotification"){
+    // This section handles incoming notifications, posted with a special CSS styling.
+    }else if(this.props.type === 'incomingNotification'){
       return (
-        <div className="message system">
+        <div className='message system'>
         {message}
         </div>
       )

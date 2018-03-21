@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 class Chatbar extends Component {
   render() {
-    // console.log('Rendering <Chatbar/>');
+    //Message event handles when a user presses 'enter' to send a new message
     const messageEvent = evt => {
       if(evt.key === 'Enter'){
         const chatMessage = evt.target;
@@ -10,7 +10,7 @@ class Chatbar extends Component {
         chatMessage.value = '';
       }
     }
-
+    //User event handles when a user presses 'enter' to change their username
     const userEvent = evt => {
       if(evt.key === 'Enter'){
         const user = evt.target;
