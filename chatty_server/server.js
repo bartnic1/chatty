@@ -28,6 +28,7 @@ function newColour() {
   return colour;
 }
 
+
 // Set up a callback that will run when a client connects to the server.
 // When a client connects they are assigned a socket, represented by the ws parameter in the callback.
 wss.on('connection', (ws) => {
@@ -44,6 +45,7 @@ wss.on('connection', (ws) => {
 
   //This section deals with messages and notifications. Responses are managed based on type, and sent to all users.
   ws.on('message', function incoming(messageData) {
+    let sendSelf = true;
     let newUUID = uuidv4();
     let message = JSON.parse(messageData);
     let returnMessage;
@@ -54,15 +56,24 @@ wss.on('connection', (ws) => {
       case 'postNotification':
         returnMessage = JSON.stringify({id: newUUID, type: 'incomingNotification', content: message.content});
         break;
+      case 'postEnterNotification':
+        returnMessage = JSON.stringify({id: newUUID, type: 'incomingNotification', content: message.content});
+        sendSelf = false;
+        break;
       default:
         break;
     }
-    // Broadcast to everyone else.
+    // Broadcast to everyone else (except if someone entered, in which case everyone else is notified)
     wss.clients.forEach(function each(client) {
-      if (client.readyState === 1) {
+      if (sendSelf === true && client.readyState === 1){
+        client.send(returnMessage);
+      }
+      if(sendSelf === false && client !== ws && client.readyState === 1){
+        console.log("sent to self");
         client.send(returnMessage);
       }
     });
+    sendSelf = true;
   });
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   // Also sends a message to all clients updating the total user count.

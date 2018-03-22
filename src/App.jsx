@@ -53,24 +53,38 @@ class App extends Component {
     //Set up websocket
     this.socket = new WebSocket("ws://localhost:3001");
 
+    this.socket.onopen = (event) => {
+      let enteringNotification = `${this.state.currentUser.name} has entered the chat`;
+      let enteringMessage = {type: "postEnterNotification", content: enteringNotification};
+      this.socket.send(JSON.stringify(enteringMessage));
+    }
+
     //Handle messages received from server
     this.socket.onmessage = (event) => {
       let currentState = this.state;
       let incomingMessage = JSON.parse(event.data);
-
       //Handle messages that update the user count
-      if(incomingMessage.type === "countMessage"){
-        currentState.userCount = incomingMessage.clientCount;
-      }
-      //Then, handle messages defining a new user's colour
-      else if(incomingMessage.type === "colour"){
-        currentState.colour = incomingMessage.colour;
-      }
-      //Otherwise, update the chat log (for messages and notifications)
-      else{
-        currentState.messages.push(incomingMessage);
+      switch(incomingMessage.type){
+        case "countMessage":
+          currentState.userCount = incomingMessage.clientCount;
+          break;
+        case "colour":
+          //Then, handle messages defining a new user's colour
+          currentState.colour = incomingMessage.colour;
+          break;
+        default:
+          //Otherwise, update the chat log (for messages and notifications)
+          currentState.messages.push(incomingMessage);
+          window.scrollTo(0, document.body.scrollHeight);
+          break;
       }
       this.setState(currentState);
+    }
+    //Update the chat if a user leaves
+    window.onbeforeunload = (event) => {
+      let leavingNotification = `${this.state.currentUser.name} has left the chat`;
+      let leavingMessage = {type: "postNotification", content: leavingNotification};
+      this.socket.send(JSON.stringify(leavingMessage));
     }
   }
 
