@@ -69,7 +69,6 @@ wss.on('connection', (ws) => {
         client.send(returnMessage);
       }
       if(sendSelf === false && client !== ws && client.readyState === 1){
-        console.log("sent to self");
         client.send(returnMessage);
       }
     });
